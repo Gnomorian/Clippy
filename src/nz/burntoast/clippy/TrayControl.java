@@ -26,7 +26,7 @@ public class TrayControl {
 	public TrayControl() throws Exception {
 		popup = new PopupMenu();
 		
-		trayIcon = new TrayIcon(image, "TestTray", popup);
+		trayIcon = new TrayIcon(image, "Clippy", popup);
 		if(SystemTray.isSupported()) {
 			SystemTray tray = SystemTray.getSystemTray();
 			
