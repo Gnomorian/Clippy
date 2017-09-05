@@ -47,7 +47,6 @@ public class App {
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -62,7 +61,6 @@ public class App {
 		settings[1] = saves;
 		
 		File file = new File("res/settings.ini");
-		
 		try {
 			PrintStream ps = new PrintStream(file);
 			ps.println(settings[0]);
@@ -71,5 +69,13 @@ public class App {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	/**
+	 * will set the program to run at startup if true
+	 * or remove its self from the startup list if false
+	 * @param startup
+	 */
+	public static void runOnStartup(boolean startup) {
+		//TODO: Add to startup options for known operating systems if possible
 	}
 }
