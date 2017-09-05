@@ -33,7 +33,8 @@ public class TrayControl {
 			trayIcon.setImageAutoSize(true);
 			
 			createDefaultItems();
-			createTextMenuItem(App.cc.getClipboardContents());
+			MenuItem item = createTextMenuItem(App.cc.getClipboardContents());
+			App.cc.stringHistory.add(item);
 			try {
 				tray.add(trayIcon);
 			}catch(AWTException e) {

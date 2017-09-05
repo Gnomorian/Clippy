@@ -1,5 +1,6 @@
 package nz.burntoast.clippy;
 
+import java.awt.MenuContainer;
 import java.awt.MenuItem;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
@@ -14,7 +15,7 @@ public class ClipboardControl extends Thread implements ClipboardOwner {
 	// sets how many recent strings it can hold
 	int history;
 	// contains the recent strings on the clipboard
-	private ArrayList<MenuItem> stringHistory = new ArrayList<MenuItem>();
+	public ArrayList<MenuItem> stringHistory = new ArrayList<MenuItem>();
 	
 	Clipboard sysClip = Toolkit.getDefaultToolkit().getSystemClipboard();
 	
@@ -78,9 +79,10 @@ public class ClipboardControl extends Thread implements ClipboardOwner {
 	    	// if the menu list is longer than the cap, remove old clip
 	    	MenuItem clip = App.tc.createTextMenuItem(clipboardContents);
 	    	stringHistory.add(clip);
-	    	if(stringHistory.size() > 10) {
+	    	if(stringHistory.size() == history) {
 		    	  //TODO: add history cap editor to settings menu
-		    	  App.tc.removeMenuItem(stringHistory.remove(0));
+		    	  MenuContainer menu = stringHistory.get(0).getParent();
+		    	  menu.remove(stringHistory.get(0));
 		    	  stringHistory.remove(0);
 		    }
 	    	System.out.println("Clipboard Changed, adding new Item");
