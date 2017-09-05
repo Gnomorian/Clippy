@@ -42,9 +42,12 @@ public class FrameSettings extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		JCheckBox chckbxStartup = new JCheckBox("Would you like to start Clippy at Startup?");
+		if(App.settings[0] == 1) {
+			chckbxStartup.setSelected(true);
+		}
 		
 		JSpinner spnnrClipSaves = new JSpinner();
-		spnnrClipSaves.setValue(10);
+		spnnrClipSaves.setValue(App.settings[1]);
 		
 		JLabel lblHowManyClips = new JLabel("How many Clips would you like Clippy to save?");
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
@@ -85,7 +88,11 @@ public class FrameSettings extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						
+						int startup = 0;
+						if(chckbxStartup.isSelected()) {
+							startup = 1;
+						}
+						App.updateSettings(startup, (int)spnnrClipSaves.getValue());
 						dispose();
 					}});
 			}
@@ -95,7 +102,7 @@ public class FrameSettings extends JDialog {
 				buttonPane.add(cancelButton);
 				cancelButton.addActionListener(new ActionListener() {
 					@Override
-					public void actionPerformed(ActionEvent arg0) {
+					public void actionPerformed(ActionEvent arg0) {	
 						dispose();
 					}});
 			}

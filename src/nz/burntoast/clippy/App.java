@@ -1,5 +1,11 @@
 package nz.burntoast.clippy;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintStream;
+
 public class App {
 	// controls the Tray icon.
 	public static TrayControl tc;
@@ -9,10 +15,9 @@ public class App {
 	// first number is a boolean of whether to launch at startup
 	// second number is how many clips to save, default is 10
 	public static int[] settings = {0, 10};
-	// settings menu may check this often, saves unnessersary read/write
-	public static boolean hasSettingsFile = false;
 	
 	public static void main(String[] args) {
+		getSettingsFile();
 	    try {
 	    	cc = new ClipboardControl(10);
 			tc = new TrayControl();
@@ -22,8 +27,30 @@ public class App {
 		}
 	}
 	
+	/**
+	 * check if a settings file exists, if it does read it and set the int[]
+	 * settings to the correct settings
+	 */
 	private static void getSettingsFile() {
-		//TODO: check if settings file exists, if it does update settings then update hasSettingsFile
+		File file =  new File("res/settings.ini");
+		if(file.exists()) {
+			try {
+				FileReader fr = new FileReader(file);
+				int character;
+				String content = "";
+				while((character = fr.read()) != -1) {
+					content += (char)character;
+				}
+				settings[0] = Integer.valueOf(content.charAt(0));
+				settings[1] = Integer.valueOf((content.substring(2, content.length()-1)).trim());
+				fr.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	/**
 	 * saves to file the settings user wants
@@ -31,10 +58,18 @@ public class App {
 	 * @param saves how many clips to save
 	 */
 	public static void updateSettings(int startup, int saves) {
-		//TODO: create a settings file
-		if(!hasSettingsFile) {
-			
+		settings[0] = startup;
+		settings[1] = saves;
+		
+		File file = new File("res/settings.ini");
+		
+		try {
+			PrintStream ps = new PrintStream(file);
+			ps.println(settings[0]);
+			ps.println(settings[1]);
+			ps.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		//TODO: update settings in file
 	}
 }
