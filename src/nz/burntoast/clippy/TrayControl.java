@@ -15,6 +15,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+
 public class TrayControl {
 	static Image image = Toolkit.getDefaultToolkit().getImage("res/icon.png");
 	
@@ -72,6 +75,15 @@ public class TrayControl {
 		history = new Menu("Recent Clipboards");
 		popup.add(history);
 		
+		MenuItem settings = new MenuItem("Settings");
+		settings.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JDialog frame = new FrameSettings();
+			}
+		});
+		popup.add(settings);
+		
 		MenuItem exit = new MenuItem("Exit");
 		exit.addActionListener(new ActionListener() {
 			@Override
@@ -81,7 +93,7 @@ public class TrayControl {
 		});
 		popup.add(exit);
 	}
-	
+
 	class CustomMenuItem extends MenuItem {
 		private static final long serialVersionUID = 1L;
 		private Transferable data;

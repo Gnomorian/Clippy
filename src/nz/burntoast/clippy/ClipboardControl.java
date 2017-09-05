@@ -80,7 +80,6 @@ public class ClipboardControl extends Thread implements ClipboardOwner {
 	    	MenuItem clip = App.tc.createTextMenuItem(clipboardContents);
 	    	stringHistory.add(clip);
 	    	if(stringHistory.size() == history) {
-		    	  //TODO: add history cap editor to settings menu
 		    	  MenuContainer menu = stringHistory.get(0).getParent();
 		    	  menu.remove(stringHistory.get(0));
 		    	  stringHistory.remove(0);
